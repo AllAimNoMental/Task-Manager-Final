@@ -7,6 +7,9 @@ namespace PersonalTask1
 {
     public  class PersonalTask: TaskBase
     {
-        public PersonalTask(string title) : base(title) { }
-    }
+        public PersonalTask(string title, Priority priority, DateTime duedate ) : base(title, priority, duedate) { }
 }
+}
+
+    
+
