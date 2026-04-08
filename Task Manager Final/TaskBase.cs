@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
+
 
 namespace TaskBase1
 {
@@ -29,7 +31,7 @@ namespace TaskBase1
     }
     public enum Priority
     {
-        Low, Medium,High
+        Low = 1, Medium,High
     }
 
 

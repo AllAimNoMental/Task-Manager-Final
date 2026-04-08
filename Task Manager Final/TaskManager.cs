@@ -12,7 +12,7 @@ namespace TaskManager1
 {
     public class TaskManager
     {
-        private List<TaskBase> Tasks = new List<TaskBase>();
+        public List<TaskBase> Tasks = new List<TaskBase>();
         public void AddTask(TaskBase task)
         {
             Tasks.Add(task);
