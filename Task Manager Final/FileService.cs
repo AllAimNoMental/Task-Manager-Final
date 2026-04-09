@@ -10,6 +10,7 @@ namespace FileService1
     {
         public async Task SaveTask(List<TaskBase> list)
         {
+            await Task.Delay(1000);
             string json = JsonSerializer.Serialize(list);
             await File.WriteAllTextAsync("json.txt", json);
         }
@@ -18,6 +19,8 @@ namespace FileService1
 
     public async Task<List<TaskBase>> LoadTasks()
         {
+
+            await Task.Delay(1000);
             if (!File.Exists("json.txt"))
             {
                 return new List<TaskBase>();

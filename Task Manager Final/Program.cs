@@ -9,25 +9,20 @@ using TaskBase1;
 using TaskBase1;
 using TaskManager1;
 using WorkTask1;
+using FileService1;
 
 public class Program
 {
     
-    static void Main()
+    static async Task Main()
     {
         TaskManager listOfTasks = new TaskManager();
+        FileService json = new FileService();
 
         bool loop = true;
         while (loop)
         {
             ShowMenu();
-            //Console.WriteLine("Welcome to task manager");
-            //Console.WriteLine("1.Add Task");
-            //Console.WriteLine("2.View Task");
-            //Console.WriteLine("3.Delete Task");
-            //Console.WriteLine("4.Mark Complete");
-            //Console.WriteLine("5.Exit ");
-            //Console.WriteLine("What do you want to do");
             int inputMenu = int.Parse(Console.ReadLine());
 
             switch (inputMenu)
@@ -47,19 +42,19 @@ public class Program
                     MarkingCompleted(listOfTasks);
                     break;
                 case 5:
+                    FilteringProcess(listOfTasks);
+                    break;
+                case 6:
+
+                    await json.SaveTask(listOfTasks.Tasks);
+                    listOfTasks.Tasks = await json.LoadTasks();
+                    break;
+                case 7:
+                    loop = false;
                     break;
 
+
             }
-
-
-            Console.WriteLine("Type exit to leave or enter to continue");
-            string input = Console.ReadLine().Trim().ToLower(); ;
-            if (input == "exit")
-            {
-                break;
-            }
-
-
         }
 
 
@@ -76,14 +71,13 @@ public class Program
         Console.WriteLine("2.View Task");
         Console.WriteLine("3.Delete Task");
         Console.WriteLine("4.Mark Complete");
-        Console.WriteLine("5.Json");
-        Console.WriteLine("6.Exit ");
+        Console.WriteLine("5.Filtering");
+        Console.WriteLine("6.Json");
+        Console.WriteLine("7.Exit ");
 
     }
     static void AddingProcess(TaskManager listTask)
     {
-
-
         bool loop = true;
         while (loop)
         {
@@ -110,48 +104,62 @@ public class Program
                 Console.WriteLine("Invalid Option");
                 return;
             }
-            Console.WriteLine("Please choose the date(yyyy-MM-dd): ");
-
-
-            string dateInput = Console.ReadLine();
-            DateTime date = DateTime.Parse(dateInput);
-
-            Console.WriteLine("What kind of task it is, Personal or Work");
-            string typeOfTask = Console.ReadLine().ToLower().Trim();
-            TaskBase task;
-            if (typeOfTask == "personal")
+            bool loop1 = true;
+            while (loop1)
             {
-                task = new PersonalTask(tittle, priority, date);
+                Console.WriteLine("Please choose the date(yyyy-MM-dd): ");
+                string dateInput = Console.ReadLine();
+                DateTime date;
+                if (DateTime.TryParse(dateInput, out date))
+                {
+                    loop1 = false;
+                    Console.WriteLine("What kind of task it is, Personal or Work");
+                    string typeOfTask = Console.ReadLine().ToLower().Trim();
+                    TaskBase task;
+                    if (typeOfTask == "personal")
+                    {
+                        task = new PersonalTask(tittle, priority, date);
 
-            }
-            else if (typeOfTask == "work")
-            {
-                task = new WorkTask(tittle, priority, date);
-            }
-            else
-            {
-                Console.WriteLine("Invalid option ");
-                return;
-            }
+                    }
+                    else if (typeOfTask == "work")
+                    {
+                        task = new WorkTask(tittle, priority, date);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid option ");
+                        return;
+                    }
 
-            listTask.AddTask(task);
+                    listTask.AddTask(task);
 
-            Console.WriteLine("If u want to add more tasks press enter if not type exit");
-            string inputExit = Console.ReadLine().ToLower().Trim();
-            if (inputExit == "exit")
-            {
-                loop = false;
+                    Console.WriteLine("If u want to add more tasks press enter if not type exit");
+                    string inputExit = Console.ReadLine().ToLower().Trim();
+                    if (inputExit == "exit")
+                    {
+                        loop = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid date");
+                }
             }
+            
+
+
         }
-
-
     }
     static void DeletingProcess(TaskManager listTaskToDelete)
     {
         listTaskToDelete.Deleting();
     }
-    static void MarkingCompleted(TaskManager TasksToComplete )
+    static void MarkingCompleted(TaskManager tasksToComplete)
     {
-        TasksToComplete.CompleteTask();
+        tasksToComplete.CompleteTask();
+    }
+    static void FilteringProcess(TaskManager Filtering)
+    {
+        Filtering.Filtering();
     }
 }

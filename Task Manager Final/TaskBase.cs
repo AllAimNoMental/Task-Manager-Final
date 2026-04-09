@@ -18,7 +18,7 @@ namespace TaskBase1
         public bool Completed { get; set; }
         public virtual void Display()
         {
-            Console.WriteLine($"{Title}| Due: {DueDate}| Completed: {Completed}| Priority: {Priority}");
+            Console.WriteLine($"Tittle: {Title}|| Due: {DueDate}|| Completed: {Completed}|| Priority: {Priority}");
         }
         public TaskBase(string title, Priority priority, DateTime dueDate)
         {

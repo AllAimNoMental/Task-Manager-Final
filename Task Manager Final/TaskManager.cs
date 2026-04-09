@@ -1,6 +1,7 @@
 ﻿using PersonalTask1;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -23,7 +24,8 @@ namespace TaskManager1
             {
                 for (int i = 0; i < Tasks.Count; i++)
                 {
-                    Console.WriteLine(i);
+                    Console.Write($"||{i + 1}|| ");
+
                     Tasks[i].Display();
 
                 }
@@ -40,25 +42,30 @@ namespace TaskManager1
             if (Tasks.Count == 0)
             {
                 Console.WriteLine("The list is empty...");
-                return;
+
             }
-            Console.WriteLine("What task do you want to delete #.... ");
-            ViewTasks();
-            if (int.TryParse(Console.ReadLine(), out int inputUser))
+            if (Tasks.Count > 0)
             {
-                if (inputUser >= 0 && inputUser < Tasks.Count)
+                Console.WriteLine("Enter the number of the task you want to delete");
+                ViewTasks();
+                if (int.TryParse(Console.ReadLine(), out int inputUser))
                 {
-                    Tasks.RemoveAt(inputUser);
-                    Console.WriteLine("Task succesfully deleted");
+                    
+                    if (inputUser - 1 >= 0 && inputUser - 1 < Tasks.Count)
+                    {
+                        Tasks.RemoveAt(inputUser - 1);
+                        Console.WriteLine("Task succesfully deleted");
+                    }
+                    else
+                    {
+                        Console.WriteLine("The number is wrong");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("The index is wrong");
+                    Console.WriteLine("invalid option");
+
                 }
-            }
-            else
-            {
-                Console.WriteLine("invalid option");
 
             }
 
@@ -69,18 +76,20 @@ namespace TaskManager1
 
         public void Filtering()
         {
-            Console.WriteLine("1.Task not Completed");
+            bool loop = true;
+            while (loop)
+                {
+                Console.WriteLine("1.Task not Completed");
             Console.WriteLine("2.Task completed");
             Console.WriteLine("3.Task to  Highest to lowest priority");
-            bool loop = true;
+            
 
             if (Tasks.Count == 0)
             {
                 Console.WriteLine("There is no task available to view");
                 return;
             }
-            while (loop)
-                {
+            
                     int inputUSer = int.Parse(Console.ReadLine());
                     if (inputUSer == 1)
                     {
@@ -124,10 +133,7 @@ namespace TaskManager1
                     {
                         loop = false;
                     }
-                    else
-                    {
-                        Console.WriteLine("Invalid option");
-                    }
+                    
 
 
                 }
@@ -142,26 +148,31 @@ namespace TaskManager1
             {
                 Console.WriteLine("There is not task available");
             }
-            ViewTasks();
-            Console.WriteLine("Enter the index of the task you want to complete");
 
-            if (int.TryParse(Console.ReadLine(), out int index))
+            if (Tasks.Count > 0)
             {
-                if (index >= 0 && index < Tasks.Count)
+                ViewTasks();
+                Console.WriteLine("Enter the index of the task you want to complete");
+                if (int.TryParse(Console.ReadLine(), out int index))
                 {
-                    Tasks[index].Completed = true;
-                    Console.WriteLine("The task has been marked as a completed");
+                    if (index - 1 >= 0 && index - 1 < Tasks.Count)
+                    {
+                        Tasks[index - 1].Completed = true;
+                        Console.WriteLine("The task has been marked as a completed");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid option");
+                    }
+
                 }
                 else
                 {
-                    Console.WriteLine("Invalid option");
+                    Console.WriteLine("invalid option");
                 }
+            }
+          
 
-            }
-            else
-            {
-                Console.WriteLine("invalid option");
-            }
 
         }
 
