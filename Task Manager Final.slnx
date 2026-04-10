@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Task Manager Final/Task Manager Final.csproj" />
+  <Project Path="UnitTest/UnitTest.csproj" Id="a46026cf-f1ae-4876-844d-64e4d8fe738c" />
 </Solution>
