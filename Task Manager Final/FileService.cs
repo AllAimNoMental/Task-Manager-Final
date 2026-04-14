@@ -10,23 +10,24 @@ namespace FileService1
     {
         public async Task SaveTask(List<TaskBase> list)
         {
+            string path = @"C:\Users\luisc\source\repos\Task Manager Final\Task Manager Final\json.txt";
             await Task.Delay(1000);
             string json = JsonSerializer.Serialize(list);
-            await File.WriteAllTextAsync("json.txt", json);
+            await File.WriteAllTextAsync(path, json);
         }
 
     
 
     public async Task<List<TaskBase>> LoadTasks()
         {
-
+            string path = @"C:\Users\luisc\source\repos\Task Manager Final\Task Manager Final\json.txt";
             await Task.Delay(1000);
             if (!File.Exists("json.txt"))
             {
                 return new List<TaskBase>();
             }
-            string DeserealizeJson = await File.ReadAllTextAsync("json.txt");
-            return JsonSerializer.Deserialize<List<TaskBase>>("json.txr");
+            string DeserealizeJson = await File.ReadAllTextAsync(@"C:\Users\luisc\source\repos\Task Manager Final\Task Manager Final\json.txt");
+            return JsonSerializer.Deserialize<List<TaskBase>>( @"C:\Users\luisc\source\repos\Task Manager Final\Task Manager Final\json.txt");
         }
     }
 }

@@ -18,13 +18,17 @@ public class Program
     {
         TaskManager listOfTasks = new TaskManager();
         FileService json = new FileService();
-
+        int inputMenu;
         bool loop = true;
         while (loop)
         {
             ShowMenu();
-            int inputMenu = int.Parse(Console.ReadLine());
-
+            while (!int.TryParse(Console.ReadLine(), out inputMenu))
+            {
+                ShowMenu();
+                Console.WriteLine("Invalid option");
+            }
+          
             switch (inputMenu)
             {
                 case 1:
@@ -79,6 +83,8 @@ public class Program
     static void AddingProcess(TaskManager listTask)
     {
         bool loop = true;
+
+        int priorityInput;
         while (loop)
         {
             Console.WriteLine("Please enter the information of the  task that you want to add");
@@ -86,8 +92,11 @@ public class Program
             string tittle = Console.ReadLine();
             Console.WriteLine("Priority(low1, medium2, high3): ");
             Priority priority;
-            int priorityInput = int.Parse(Console.ReadLine());
-            if (priorityInput == 1)
+            while (!int.TryParse(Console.ReadLine(), out priorityInput))
+            {
+                Console.WriteLine("Invalid Option");
+            }
+                if (priorityInput == 1)
             {
                 priority = Priority.Low;
             }
@@ -105,6 +114,7 @@ public class Program
                 return;
             }
             bool loop1 = true;
+
             while (loop1)
             {
                 Console.WriteLine("Please choose the date(yyyy-MM-dd): ");

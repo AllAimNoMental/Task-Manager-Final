@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace TaskManager1
 
         }
 
-        public  void Deleting()
+        public void Deleting()
         {
             if (Tasks.Count == 0)
             {
@@ -46,52 +47,60 @@ namespace TaskManager1
             }
             if (Tasks.Count > 0)
             {
-                Console.WriteLine("Enter the number of the task you want to delete");
+                int index;
                 ViewTasks();
-                if (int.TryParse(Console.ReadLine(), out int inputUser))
+                Console.WriteLine("Enter the number of the task you want to delete:");
+                if (int.TryParse(Console.ReadLine(), out index))
                 {
-                    
-                    if (inputUser - 1 >= 0 && inputUser - 1 < Tasks.Count)
-                    {
-                        Tasks.RemoveAt(inputUser - 1);
-                        Console.WriteLine("Task succesfully deleted");
-                    }
-                    else
-                    {
-                        Console.WriteLine("The number is wrong");
-                    }
+                    DeletingLogic(index);
                 }
                 else
                 {
-                    Console.WriteLine("invalid option");
-
+                    Console.WriteLine("Invalid option");
                 }
 
             }
-
-
         }
-
-
+    
+        public void DeletingLogic(int index)
+        {
+            
+            
+                if (index - 1 >= 0 && index - 1 < Tasks.Count)
+                {
+                    Tasks.RemoveAt(index - 1);
+                    Console.WriteLine("Task succesfully deleted");
+                }
+                else
+                {
+                    Console.WriteLine("The number is wrong");
+                }
+            
+          
+        }
 
         public void Filtering()
         {
+            
+
             bool loop = true;
             while (loop)
                 {
                 Console.WriteLine("1.Task not Completed");
             Console.WriteLine("2.Task completed");
             Console.WriteLine("3.Task to  Highest to lowest priority");
-            
 
-            if (Tasks.Count == 0)
+                int inputUser;
+                if (Tasks.Count == 0)
             {
                 Console.WriteLine("There is no task available to view");
                 return;
             }
-            
-                    int inputUSer = int.Parse(Console.ReadLine());
-                    if (inputUSer == 1)
+                while (!int.TryParse(Console.ReadLine(), out inputUser))
+                {
+                    Console.WriteLine("Invalid option");
+                }
+                    if (inputUser == 1)
                     {
                         Console.WriteLine("Tasks not completed");
 
@@ -101,7 +110,7 @@ namespace TaskManager1
                             task.Display();
                         }
                     }
-                    else if (inputUSer == 2)
+                    else if (inputUser == 2)
                     {
                         Console.WriteLine("Task completed");
                         var completed = Tasks.Where(t => t.Completed).ToList();
@@ -113,7 +122,7 @@ namespace TaskManager1
 
 
                     }
-                    else if (inputUSer == 3)
+                    else if (inputUser == 3)
                     {
                         Console.WriteLine("Highest to lowest");
                         var sorted = Tasks.OrderByDescending(t => t.Priority).ToList();
@@ -128,20 +137,20 @@ namespace TaskManager1
                         Console.WriteLine("Invalid Option");
                     }
                     Console.WriteLine("If you want to exit the filtering menu type (exit), if not press enter");
-                    string inputUser = Console.ReadLine().ToLower();
-                    if (inputUser == "exit")
+                    string inputUserExit = Console.ReadLine().ToLower();
+                    if (inputUserExit == "exit")
                     {
                         loop = false;
                     }
-                    
 
 
-                }
+
             }
-            
+        }
 
 
-        
+
+
         public void CompleteTask()
         {
             if (Tasks.Count == 0)
@@ -155,25 +164,26 @@ namespace TaskManager1
                 Console.WriteLine("Enter the index of the task you want to complete");
                 if (int.TryParse(Console.ReadLine(), out int index))
                 {
-                    if (index - 1 >= 0 && index - 1 < Tasks.Count)
-                    {
-                        Tasks[index - 1].Completed = true;
-                        Console.WriteLine("The task has been marked as a completed");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid option");
-                    }
-
+                    CompleteTasKLogic(index);
                 }
                 else
                 {
                     Console.WriteLine("invalid option");
                 }
             }
-          
 
-
+        }
+        public void CompleteTasKLogic(int index)
+        {
+            if (index - 1 >= 0 && index - 1 < Tasks.Count)
+            {
+                Tasks[index - 1].Completed = true;
+                Console.WriteLine("The task has been marked as a completed");
+            }
+            else
+            {
+                Console.WriteLine("Invalid option");
+            }
         }
 
     }
