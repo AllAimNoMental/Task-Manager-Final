@@ -16,8 +16,13 @@ public class Program
     
     static async Task Main()
     {
+        
+
         TaskManager listOfTasks = new TaskManager();
+
+
         FileService json = new FileService();
+        listOfTasks.Tasks = await json.LoadTasks();
         int inputMenu;
         bool loop = true;
         while (loop)
@@ -50,7 +55,7 @@ public class Program
                     break;
                 case 6:
 
-                    await json.SaveTask(listOfTasks.Tasks);
+                    await json.SaveTasks(listOfTasks.Tasks);
                     listOfTasks.Tasks = await json.LoadTasks();
                     break;
                 case 7:
@@ -60,12 +65,6 @@ public class Program
 
             }
         }
-
-
-
-
-
-
 
     }
     static void ShowMenu()
@@ -160,16 +159,10 @@ public class Program
 
         }
     }
-    static void DeletingProcess(TaskManager listTaskToDelete)
-    {
-        listTaskToDelete.Deleting();
-    }
-    static void MarkingCompleted(TaskManager tasksToComplete)
-    {
-        tasksToComplete.CompleteTask();
-    }
-    static void FilteringProcess(TaskManager Filtering)
-    {
-        Filtering.Filtering();
-    }
+    static void DeletingProcess(TaskManager listTaskToDelete) => listTaskToDelete.Deleting();
+  
+    static void MarkingCompleted(TaskManager tasksToComplete) => tasksToComplete.CompleteTask();
+ 
+    static void FilteringProcess(TaskManager Filtering) => Filtering.Filtering();
+   
 }

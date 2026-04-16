@@ -27,7 +27,7 @@ namespace TaskManager1
                 {
                     Console.Write($"||{i + 1}|| ");
 
-                    Tasks[i].Display();
+                    Tasks[i].ShowData();
 
                 }
             }
@@ -107,7 +107,7 @@ namespace TaskManager1
                         var notCompleted = Tasks.Where(t => t.Completed == false).ToList();
                         foreach (var task in notCompleted)
                         {
-                            task.Display();
+                            task.ShowData();
                         }
                     }
                     else if (inputUser == 2)
@@ -117,7 +117,7 @@ namespace TaskManager1
 
                         foreach (var task in completed)
                         {
-                            task.Display();
+                            task.ShowData();
                         }
 
 
@@ -128,7 +128,7 @@ namespace TaskManager1
                         var sorted = Tasks.OrderByDescending(t => t.Priority).ToList();
                         foreach (var task in sorted)
                         {
-                            task.Display();
+                            task.ShowData();
                         }
                     }
                     else
